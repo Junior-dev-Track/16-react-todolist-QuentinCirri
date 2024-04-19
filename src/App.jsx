@@ -1,3 +1,5 @@
+import Todolist from "./Todolist.jsx";
+
 function App() {
   return (
     <>
@@ -10,11 +12,7 @@ function App() {
       </button>
       <hr />
       <h2>Todos</h2>
-      <input type="checkbox" name="Learn React" id="" />
-      <label htmlFor="Learn React">Learn React</label>
-      <div></div>
-      <input type="checkbox" name="Be Awesome!" id="" />
-      <label htmlFor="Be Awesome">Be Awesome</label>
+      <Todolist />
     </>
   );
 }
