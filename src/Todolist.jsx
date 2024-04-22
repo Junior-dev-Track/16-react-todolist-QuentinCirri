@@ -17,6 +17,16 @@ export default function TodoList() {
   });
 
   const [inputValue, setInputValue] = useState("");
+  const [darkMode, setDarkMode] = useState(false);
+  const toggleDarkMode = () => setDarkMode((prevMode) => !prevMode);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
+  }, [darkMode]);
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -83,6 +93,9 @@ export default function TodoList() {
           </li>
         ))}
       </ul>
+      <button className="Dark-mode" onClick={toggleDarkMode}>
+        Toggle Dark Mode
+      </button>
     </>
   );
 }
