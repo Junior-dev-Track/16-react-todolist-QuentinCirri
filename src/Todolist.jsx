@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function TodoList() {
   const initialTodos = [
@@ -6,8 +6,20 @@ export default function TodoList() {
     { id: 2, text: "Be Awesome", completed: false },
     { id: 3, text: "Quentin", completed: false },
   ];
-  const [todos, setTodos] = useState(initialTodos);
+  const [todos, setTodos] = useState(() => {
+    const savedTodos = localStorage.getItem("todos");
+    if (savedTodos) {
+      return JSON.parse(savedTodos);
+    } else {
+      return initialTodos;
+    }
+  });
+
   const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   const toggleTodo = (id) => {
     setTodos(
