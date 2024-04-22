@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./Todolist.css";
 
 export default function TodoList() {
   const initialTodos = [
@@ -28,6 +29,7 @@ export default function TodoList() {
       )
     );
   };
+
   const addTodo = () => {
     setTodos([
       ...todos,
@@ -56,6 +58,7 @@ export default function TodoList() {
       </button>
 
       <h2>Todos</h2>
+      <hr />
       <ul style={{ listStyleType: "none" }}>
         {todos.map((todos) => (
           <li
@@ -71,6 +74,7 @@ export default function TodoList() {
             />
             {todos.text}
             <button
+              className="deleteBtn"
               onClick={() => deleteTodo(todos.id)}
               disabled={!todos.completed}
             >
