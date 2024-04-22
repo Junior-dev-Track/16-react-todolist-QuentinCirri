@@ -7,6 +7,7 @@ export default function TodoList() {
     { id: 3, text: "Quentin", completed: false },
   ];
   const [todos, setTodos] = useState(initialTodos);
+  const [inputValue, setInputValue] = useState("");
 
   const toggleTodo = (id) => {
     setTodos(
@@ -15,19 +16,52 @@ export default function TodoList() {
       )
     );
   };
+  const addTodo = () => {
+    setTodos([
+      ...todos,
+      { id: todos.length + 1, text: inputValue, completed: false },
+    ]);
+    setInputValue("");
+  };
+
+  const deleteTodo = (id) => {
+    setTodos(todos.filter((todos) => todos.id !== id));
+  };
 
   return (
-    <ul style={{ listStyleType: "none" }}>
-      {todos.map((todos) => (
-        <li key={todos.id}>
-          <input
-            type="checkbox"
-            checked={todos.completed}
-            onChange={() => toggleTodo(todos.id)}
-          />
-          {todos.text}
-        </li>
-      ))}
-    </ul>
+    <>
+      <input
+        placeholder="Type a new todo"
+        type="text"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+      />
+      <button
+        onClick={addTodo}
+        style={{ backgroundColor: "blue", color: "white" }}
+      >
+        Add Todo
+      </button>
+
+      <h2>Todos</h2>
+      <ul style={{ listStyleType: "none" }}>
+        {todos.map((todos) => (
+          <li
+            key={todos.id}
+            style={{
+              textDecoration: todos.completed ? "line-through" : "none",
+            }}
+          >
+            <input
+              type="checkbox"
+              checked={todos.completed}
+              onChange={() => toggleTodo(todos.id)}
+            />
+            {todos.text}
+            <button onClick={() => deleteTodo(todos.id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
