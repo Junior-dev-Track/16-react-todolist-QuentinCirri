@@ -70,7 +70,12 @@ export default function TodoList() {
               onChange={() => toggleTodo(todos.id)}
             />
             {todos.text}
-            <button onClick={() => deleteTodo(todos.id)}>Delete</button>
+            <button
+              onClick={() => deleteTodo(todos.id)}
+              disabled={!todos.completed}
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
