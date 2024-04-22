@@ -16,8 +16,6 @@ export default function TodoList() {
     }
   });
 
-  const [inputValue, setInputValue] = useState("");
-
   const [darkMode, setDarkMode] = useState(() => {
     const savedMode = localStorage.getItem("darkMode");
     return savedMode ? JSON.parse(savedMode) : false;
@@ -33,6 +31,8 @@ export default function TodoList() {
     }
     localStorage.setItem("darkMode", JSON.stringify(darkMode));
   }, [darkMode]);
+
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -77,12 +77,14 @@ export default function TodoList() {
       <hr />
       <ul style={{ listStyleType: "none" }}>
         {todos.map((todos) => (
-          <li
-            key={todos.id}
-            style={{
-              textDecoration: todos.completed ? "line-through" : "none",
-            }}
-          >
+          <li key={todos.id}>
+            <span
+              className="spanli"
+              style={{
+                textDecoration: todos.completed ? "line-through" : "none",
+              }}
+            ></span>
+
             <input
               type="checkbox"
               checked={todos.completed}
