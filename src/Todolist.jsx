@@ -17,7 +17,12 @@ export default function TodoList() {
   });
 
   const [inputValue, setInputValue] = useState("");
-  const [darkMode, setDarkMode] = useState(false);
+
+  const [darkMode, setDarkMode] = useState(() => {
+    const savedMode = localStorage.getItem("darkMode");
+    return savedMode ? JSON.parse(savedMode) : false;
+  });
+
   const toggleDarkMode = () => setDarkMode((prevMode) => !prevMode);
 
   useEffect(() => {
@@ -26,6 +31,7 @@ export default function TodoList() {
     } else {
       document.body.classList.remove("dark-mode");
     }
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
   }, [darkMode]);
 
   useEffect(() => {
