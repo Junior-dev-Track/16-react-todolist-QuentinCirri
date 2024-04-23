@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Todolist.css";
+import Form from "./Form.jsx";
+import ButtonDel from "./Buttondel.jsx";
+import DarkMode from "./Darkmode.jsx";
 
 export default function TodoList() {
   const initialTodos = [
@@ -16,23 +19,19 @@ export default function TodoList() {
     }
   });
 
-  const [darkMode, setDarkMode] = useState(() => {
-    const savedMode = localStorage.getItem("darkMode");
-    return savedMode ? JSON.parse(savedMode) : false;
-  });
-
-  const toggleDarkMode = () => setDarkMode((prevMode) => !prevMode);
-
-  useEffect(() => {
-    if (darkMode) {
-      document.body.classList.add("dark-mode");
-    } else {
-      document.body.classList.remove("dark-mode");
-    }
-    localStorage.setItem("darkMode", JSON.stringify(darkMode));
-  }, [darkMode]);
+  const deleteTodo = (id) => {
+    setTodos(todos.filter((todos) => todos.id !== id));
+  };
 
   const [inputValue, setInputValue] = useState("");
+
+  const addTodo = () => {
+    setTodos([
+      ...todos,
+      { id: todos.length + 1, text: inputValue, completed: false },
+    ]);
+    setInputValue("");
+  };
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -46,33 +45,13 @@ export default function TodoList() {
     );
   };
 
-  const addTodo = () => {
-    setTodos([
-      ...todos,
-      { id: todos.length + 1, text: inputValue, completed: false },
-    ]);
-    setInputValue("");
-  };
-
-  const deleteTodo = (id) => {
-    setTodos(todos.filter((todos) => todos.id !== id));
-  };
-
   return (
     <>
-      <input
-        placeholder="Type a new todo"
-        type="text"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+      <Form
+        addTodo={addTodo}
+        setInputValue={setInputValue}
+        inputValue={inputValue}
       />
-      <button
-        onClick={addTodo}
-        style={{ backgroundColor: "blue", color: "white" }}
-      >
-        Add Todo
-      </button>
-
       <h2>Todos</h2>
       <hr />
       <ul style={{ listStyleType: "none" }}>
@@ -84,26 +63,17 @@ export default function TodoList() {
                 textDecoration: todos.completed ? "line-through" : "none",
               }}
             ></span>
-
             <input
               type="checkbox"
               checked={todos.completed}
               onChange={() => toggleTodo(todos.id)}
             />
             {todos.text}
-            <button
-              className="deleteBtn"
-              onClick={() => deleteTodo(todos.id)}
-              disabled={!todos.completed}
-            >
-              Delete
-            </button>
+            <ButtonDel deleteTodo={deleteTodo} todos={todos} />
           </li>
         ))}
       </ul>
-      <button className="Dark-mode" onClick={toggleDarkMode}>
-        Toggle Dark Mode
-      </button>
+      <DarkMode />
     </>
   );
 }
