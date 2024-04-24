@@ -3,6 +3,7 @@ import "./Todolist.css";
 import Form from "./Form.jsx";
 import ButtonDel from "./Buttondel.jsx";
 import DarkMode from "./Darkmode.jsx";
+import ButtonEdit from "./Buttonedit.jsx";
 
 export default function TodoList() {
   const initialTodos = [
@@ -33,6 +34,10 @@ export default function TodoList() {
     setInputValue("");
   };
 
+  const editTodo = () => {
+    setTodos;
+  };
+
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
@@ -47,6 +52,8 @@ export default function TodoList() {
 
   return (
     <>
+      <h1>My Todo App</h1>
+      <hr />
       <Form
         addTodo={addTodo}
         setInputValue={setInputValue}
@@ -69,6 +76,7 @@ export default function TodoList() {
               onChange={() => toggleTodo(todos.id)}
             />
             {todos.text}
+            <ButtonEdit />
             <ButtonDel deleteTodo={deleteTodo} todos={todos} />
           </li>
         ))}

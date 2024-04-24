@@ -1,17 +1,20 @@
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Todolist from "./Todolist.jsx";
-import Calendar from "react-calendar";
+import MyCalendar from "./Calendar.jsx";
 
 function App() {
   return (
-    <>
-      <h1>My Todo App</h1>
-      <hr />
+    <Router>
+      <Routes>
+        <Route path="/" element={<Todolist />} />
 
-      <Todolist />
-    </>
+        <Route path="/second" element={<MyCalendar />} />
+      </Routes>
+    </Router>
   );
 }
-/*<Calendar />
+/*
+
  */
 
 export default App;
